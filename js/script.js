@@ -52,8 +52,8 @@ function addPagination(list) {
    const numOfPages = Math.ceil(list.length / 9);
    const linkList = document.querySelector(".link-list");
    linkList.innerHTML = "";
-   for (let i=1; i<numOfPages; i++) {
-      const button = `
+   for (let i=1; i<=numOfPages; i++) {
+      let button = `
          <li>
             <button type="button">${i}</button>
          </li>
@@ -74,6 +74,7 @@ function addPagination(list) {
 
 
    })
+   console.log(numOfPages)
 
 }
 
