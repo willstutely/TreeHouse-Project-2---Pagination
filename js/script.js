@@ -24,6 +24,7 @@ function showPage(list, page) {
    studentList.innerHTML = "";
    for (let i=0; i<list.length; i++) {
       if (i>=startIndex && i<endIndex) {
+         // generate HTML using template literal and store it in variable studentCard
          const studentCard = `
             <li class = "student-item cf>
                <div class= "student-details">
@@ -41,43 +42,41 @@ function showPage(list, page) {
    }
 }
 
-showPage(data, 1);
-
-
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
+   // calculate number of pages by dividing length of data set by desired display parameter
    const numOfPages = Math.ceil(list.length / 9);
    const linkList = document.querySelector(".link-list");
    linkList.innerHTML = "";
+   // loop through calculated numOfPages and generate HTML for each button
    for (let i=1; i<=numOfPages; i++) {
-      let button = `
+      const button = `
          <li>
             <button type="button">${i}</button>
          </li>
          `;
       linkList.insertAdjacentHTML('beforeend', button)
-      
    }
+   // select first button and assign it the 'active' class attribute
    const activeButton = document.querySelector('button');
       activeButton.className = "active";
+   // click eventListener assigns 'active' class to the target button
+   // and removes the same class from the previously active button
+   // it also calls the showPage function to display the next set of students
    linkList.addEventListener('click', (e) => {
       if (e.target.tagName === 'BUTTON') {
          const element = document.querySelector('.active');
          element.className = '';
          e.target.className = 'active';
-         showPage(list, e.target.textContent)
-
+         showPage(list, e.target.textContent);
       }
-
-
    })
-   console.log(numOfPages)
-
 }
 
-addPagination(data);
 
 // Call functions
+showPage(data, 1);
+addPagination(data);
