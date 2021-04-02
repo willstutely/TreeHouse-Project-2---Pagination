@@ -11,7 +11,50 @@ For assistance:
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
+/* <label for="search" class="student-search">
+            <span>Search by name</span>
+            <input id="search" placeholder="Search by name...">
+            <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+          </label> */
+const header = document.querySelector('header');
+const searchField = `
+   <label for="search" class="student-search">
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+      </label> 
+   `;
+header.insertAdjacentHTML('beforeend', searchField)
 
+const search = document.querySelector('input');
+const submit = document.querySelector('button');
+let results = [];
+
+function performSearch(searchInput, list) {
+   for (let i=0; i<list.length; i++) {
+      if (searchInput.value.length !== 0 && list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) || 
+         list[i].name.last.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            results.push(list[i]);
+      }
+   }
+}
+
+submit.addEventListener('click', (event) => {
+   event.preventDefault();
+   results = [];
+   performSearch(search, data);
+   addPagination(results);
+});
+
+search.addEventListener('keyup', () => {
+   results = [];
+   performSearch(search, data);
+   addPagination(results);
+   if (search.value.length === 0) {
+      showPage(data, 1);
+      addPagination(data);
+   }
+});
 
 /*
 Create the `showPage` function
@@ -38,7 +81,6 @@ function showPage(list, page) {
             </li>`;
           studentList.insertAdjacentHTML('beforeend', studentCard);
       }
-      
    }
 }
 
@@ -78,5 +120,7 @@ function addPagination(list) {
 
 
 // Call functions
-showPage(data, 1);
-addPagination(data);
+if (search.value.length === 0) {
+   showPage(data, 1);
+   addPagination(data);
+}
