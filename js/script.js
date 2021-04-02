@@ -11,11 +11,6 @@ For assistance:
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
-/* <label for="search" class="student-search">
-            <span>Search by name</span>
-            <input id="search" placeholder="Search by name...">
-            <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
-          </label> */
 const header = document.querySelector('header');
 const searchField = `
    <label for="search" class="student-search">
@@ -35,7 +30,7 @@ function performSearch(searchInput, list) {
       if (searchInput.value.length !== 0 && list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) || 
          list[i].name.last.toLowerCase().includes(searchInput.value.toLowerCase())) {
             results.push(list[i]);
-      }
+      } 
    }
 }
 
@@ -43,12 +38,14 @@ submit.addEventListener('click', (event) => {
    event.preventDefault();
    results = [];
    performSearch(search, data);
+   showPage(results, 1)
    addPagination(results);
 });
 
 search.addEventListener('keyup', () => {
    results = [];
    performSearch(search, data);
+   showPage(results, 1);
    addPagination(results);
    if (search.value.length === 0) {
       showPage(data, 1);
@@ -120,7 +117,5 @@ function addPagination(list) {
 
 
 // Call functions
-if (search.value.length === 0) {
-   showPage(data, 1);
-   addPagination(data);
-}
+window.onload = showPage(data, 1), addPagination(data);
+
