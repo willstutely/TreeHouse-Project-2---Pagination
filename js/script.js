@@ -47,9 +47,16 @@ search.addEventListener('keyup', () => {
    performSearch(search, data);
    showPage(results, 1);
    addPagination(results);
-   if (search.value.length === 0) {
-      showPage(data, 1);
-      addPagination(data);
+   const studentList = document.querySelector('.student-list');
+   if (results.length === 0) {
+      const alert = `
+      <li class = "student-item cf>
+         <div class= "no-results">
+            <h3>Your search returned zero results</h3>
+         </div>
+      </li>
+      `;
+      studentList.insertAdjacentHTML('beforeend', alert);
    }
 });
 
@@ -66,7 +73,7 @@ function showPage(list, page) {
       if (i>=startIndex && i<endIndex) {
          // generate HTML using template literal and store it in variable studentCard
          const studentCard = `
-            <li class = "student-item cf>
+            <li class = "student-item cf">
                <div class= "student-details">
                   <img class="avatar" src="${list[i].picture.medium}" alt="Profile Picture">
                   <h3>${list[i].name.first} ${list[i].name.last}</h3>
