@@ -3,14 +3,16 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-
-
 /*
 For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
+// Exceeds Search Feature:
+
+// Generate search bar by selecting the parent node, storing the HTML template literal, and then inserting the code 
+// using insertAdjacentHTML
 const header = document.querySelector('header');
 const searchField = `
    <label for="search" class="student-search">
@@ -21,10 +23,18 @@ const searchField = `
    `;
 header.insertAdjacentHTML('beforeend', searchField)
 
+// Select the newly created search input element and the search button for subsequent eventListeners
 const search = document.querySelector('input');
 const submit = document.querySelector('button');
+
+// Create an empty array to store search results. This array will be passed as an argument on the showPage and
+// addPagination functions to display the search results
 let results = [];
 
+// Create search function that loops through the [data] array, converts content to lowerCase and compares 
+// the value of the searchInput to each entry.  If there is a match the match is pushed to the [resutls] array.
+// The basic concept of the search function as well as the event listeners was obtained via the study tutorial provided by
+// Team TreeHouse
 function performSearch(searchInput, list) {
    for (let i=0; i<list.length; i++) {
       if (searchInput.value.length !== 0 && list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) || 
@@ -34,14 +44,30 @@ function performSearch(searchInput, list) {
    }
 }
 
+// eventListener for the "submit" button. Listens for 'click', clears the contents of [results], then calls the performSearch
+// function passing the value of the searchInput, and the [data] array which then repopulates the [results] array.  
+// Then it calls the the showPage function and passes the [results] array instead of the [data] array, and then paginates
+// the search results.  If no results are returned then a message is displayed using insertAdjacentHTML.  
 submit.addEventListener('click', (event) => {
    event.preventDefault();
    results = [];
    performSearch(search, data);
    showPage(results, 1)
    addPagination(results);
+   const studentList = document.querySelector('.student-list');
+   if (results.length === 0) {
+      const alert = `
+      <li class = "student-item cf>
+         <div class= "no-results">
+            <h3>Your search returned zero results</h3>
+         </div>
+      </li>
+      `;
+      studentList.insertAdjacentHTML('beforeend', alert);
+   }
 });
 
+// eventListener for the "submit" button with the "keyup" event.  It has the same basic functionality as the "click" listener.
 search.addEventListener('keyup', () => {
    results = [];
    performSearch(search, data);
@@ -122,7 +148,7 @@ function addPagination(list) {
    })
 }
 
-
 // Call functions
-window.onload = showPage(data, 1), addPagination(data);
+showPage(data, 1);
+addPagination(data);
 
