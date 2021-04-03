@@ -1,0 +1,3 @@
+Team TreeHouse Project 2 - Pagination
+
+This project accesses an array of students and displays them with a set number per page, and dynamically creates the necessary number of pages. Pagination buttons are displayed at the bottom, and the active page is highlighted.   In going for the "exceeds" grade, a search feature was added with "click" and "keyup" event listeners.  The search results are also paginated, and in the event a search yields no results a message is displayed via JavaScript generated HTML.  To return to the full list of students the search bar just needs to be cleared.
